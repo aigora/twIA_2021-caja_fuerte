@@ -6,6 +6,7 @@ Caja fuerte con alarma mediante arduino.
 
 David J. dos Santos dos Reis (David2Santos)
 Raquel Clemente Bastante (raquelclementebastante)
+Daniel de la Cruz Redondo (danicrured20)
 [Nombres, apellidos, y usuario GitHub de los( integrantes del equipo.]
 
 ## Objetivos del trabajo
