@@ -1,5 +1,5 @@
-# [Caja fuerte]
-Caja fuerte con alarma mediante arduino.
+# [Papelera]
+
 [Descripción breve del proyecto a realizar (2-3 frases).]
 
 ## Integrantes del equipo
