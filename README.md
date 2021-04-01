@@ -2,8 +2,8 @@
 
 [Descripción breve del proyecto a realizar (2-3 frases).]
 
-Programar y realizar el mecanismo de una papelera autom´tica que se abra mediante un pulsador, contabilizando el número de veces que esta se abre y compactando 
-el contenido cuando el dicho contador llegue a un determinado número.
+Programar y realizar el mecanismo de una papelera automática que se abra mediante un pulsador, contabilizando el número de veces que esta se abre y compactando 
+el contenido cuando dicho contador llegue a un determinado número.
 
 ## Integrantes del equipo
 
@@ -11,6 +11,7 @@ David J. dos Santos dos Reis (David2Santos)
 Raquel Clemente Bastante (raquelclementebastante)
 Daniel de la Cruz Redondo (danicrured20)
 Carlos Bravo Salas
+Alvaro Chillari Sanchez (AlvaroChS)
 [Nombres, apellidos, y usuario GitHub de los( integrantes del equipo.]
 
 ## Objetivos del trabajo
