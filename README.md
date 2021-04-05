@@ -10,7 +10,7 @@ el contenido cuando dicho contador llegue a un determinado número.
 David J. dos Santos dos Reis (David2Santos)
 Raquel Clemente Bastante (raquelclementebastante)
 Daniel de la Cruz Redondo (danicrured20)
-Carlos Bravo Salas
+Carlos Bravo Salas(cbravosa)
 Alvaro Chillari Sanchez (AlvaroChS)
 [Nombres, apellidos, y usuario GitHub de los( integrantes del equipo.]
 
