@@ -41,6 +41,11 @@ void loop()
         {
            prensadobajada(dato);
         }
+	
+	estado = digitalRead(p);//LEER PULSADOR
+	if (estado == LOW) {
+		cierre(an);
+	}
 }
 void apertura(int an) {
 	for (an = 0; an < 45; an++) {
