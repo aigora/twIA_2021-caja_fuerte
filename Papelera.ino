@@ -13,6 +13,8 @@ int dato=1;
 	
 void apertura(int);
 void prensadobajada(int);
+void cierre(int);
+
 void setup()
 {
 	serv.attach(s);
@@ -58,3 +60,8 @@ void prensadobajada(int dato)
              
          }
  }
+void cierre(int an){
+	for (an = 45; an < 0; an--) {
+		serv.write(an);//se cierra lentamente a 0 grados
+	}
+}
