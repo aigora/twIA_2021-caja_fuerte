@@ -14,6 +14,7 @@ int dato=1;
 void apertura(int);
 void prensadobajada(int);
 void cierre(int);
+void prensadosubida(int);
 
 void setup()
 {
@@ -22,7 +23,7 @@ void setup()
 	serv.write(ang);//el servo estará a cero grados
 	
 	pinMode(PIR,INPUT); //Establece el pin del sensor como entrada
-	pinMode(mot,OUTPUT); // Establece el pin del motro como salida
+	pinMode(mot,OUTPUT); // Establece el pin del motor como salida
         Serial.begin(9600); //Definimos la velocidad de transferencia a 9600
 
 }
@@ -35,12 +36,13 @@ void loop()
 	}
 	
 	
-	
 	sensor=digitalRead(PIR); //Guarda el estado del sensor en la variable
         if(sensor==HIGH) //Si el sensor es activado
         {
            prensadobajada(dato);
         }
+	
+	prensadosubida(dato); //No depende del sensor
 	
 	estado = digitalRead(p);//LEER PULSADOR
 	if (estado == LOW) {
@@ -68,5 +70,17 @@ void prensadobajada(int dato)
 void cierre(int an){
 	for (an = 45; an < 0; an--) {
 		serv.write(an);//se cierra lentamente a 0 grados
+	}
+}
+
+void prensadosubida(int dato)
+{
+	while(Serial.available())
+	{
+		byte dato=Serial.read();
+		if(dato==1)
+		{
+			digitalWrite(mot,LOW); //Se necesita otro pin?
+		}
 	}
 }
