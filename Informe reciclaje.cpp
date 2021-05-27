@@ -10,13 +10,13 @@ int main() {
 	FILE* f;
 	PAP *p;
 	errno_t err;
-	int i = 5;//variable que se recibirÌa desde arduino que recopilarÌa las veces que se ha prensado la basura, esto es un ejemplo para mostrar su funcionamiento 
+	int i = 5;//variable que se recibir√≠a desde arduino que recopilar√≠a las veces que se ha prensado la basura, esto es un ejemplo para mostrar su funcionamiento 
 	err = fopen_s(&f, "Reciclaje.txt", "w+");
 	if (err == 0) {
-		printf("El archivo Reciclaje.txt est· abierto\n");
+		printf("El archivo Reciclaje.txt est√° abierto\n");
 	}
 	else {
-		printf("El archivo Reciclaje.txt NO est· abierto\n");
+		printf("El archivo Reciclaje.txt NO est√° abierto\n");
 	}
 	p = (PAP*)malloc(i * sizeof(PAP));
 	informe(f, p, i);
