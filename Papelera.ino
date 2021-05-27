@@ -1,86 +1,135 @@
 #include <Servo.h>
+#define Pinboton 22
+#define Azul 38
+#define Amarillo 42
+#define Rojo 50
+#define Echo 32
+#define Trigger 34
+ 
 Servo serv;
-boolean sensor; //Variable almacena el estado del sensor (activado/desactivado)
-
-int p = n;//n es el número del pin
-int s = m;//m es el numero del pin
-int ang = 0;
+Servo myserv;
+ 
+int val, val2 = 270;
 int estado = 0;
+const float sonido = 34300.0; // Velocidad del sonido en cm/s
+const float umbral1 = 30.0;           
+const float umbral2 = 20.0;
+const float umbral3 = 10.0;
+float distancia = 0.0;
 
-int PIR= 2 //Establece el pin 2 para el sensor PIR
-int mot= 3 //Establece el pin 3 para el motor
-int dato=1;
-	
 void apertura(int);
-void prensadobajada(int);
 void cierre(int);
-void prensadosubida(int);
-
-void setup()
-{
-	serv.attach(s);
-	pinMode(p, INPUT);//EL PULSADOR
-	serv.write(ang);//el servo estará a cero grados
-	
-	pinMode(PIR,INPUT); //Establece el pin del sensor como entrada
-	pinMode(mot,OUTPUT); // Establece el pin del motor como salida
-        Serial.begin(9600); //Definimos la velocidad de transferencia a 9600
-
+void iniciarTrigger();
+float calcularDist();
+void apagarLEDs();
+void llenadoyprensado(float, int);
+ 
+void setup() 
+{ 
+  Serial.begin(9600);
+  serv.attach(26);
+  serv.attach(31);
+  pinMode(Pinboton, INPUT);
+  pinMode(Azul, OUTPUT);
+  pinMode(Amarillo, OUTPUT);
+  pinMode(Rojo, OUTPUT);
+  pinMode(Echo, INPUT);
+  pinMode(Trigger, OUTPUT);     
+} 
+ 
+void loop() 
+{ 
+  estado = digitalRead(Pinboton);
+  if (estado == HIGH) {
+    apertura(estado);
+  }else{
+    cierre(estado);
+  }
+   // Preparamos el sensor de ultrasonidos
+  iniciarTrigger();
+ 
+  // Obtenemos la distancia
+  float distancia = calcularDist();
+ 
+  // Apagamos todos los LEDs
+  apagarLEDs();
+ 
+  // Lanzamos alerta si estamos dentro del rango de peligro
+  if (distancia < umbral1)
+  {
+    // Lanzamos alertas
+    llenadoyprensado(distancia, val2);
+  }
 }
 
-void loop()
-{
-	estado = digitalRead(p);//LEER PULSADOR
-	if (estado == HIGH /*&& dist.sensor>=0*/) {
-		apertura(ang);
-	}
-	
-	
-	sensor=digitalRead(PIR); //Guarda el estado del sensor en la variable
-        if(sensor==HIGH) //Si el sensor es activado
-        {
-           prensadobajada(dato);
-        }
-	
-	prensadosubida(dato); //No depende del sensor
-	
-	estado = digitalRead(p);//LEER PULSADOR
-	if (estado == LOW) {
-		cierre(an);
-	}
-}
-void apertura(int an) {
-	for (an = 0; an < 45; an++) {
-		serv.write(an);//se abre lentamente a 45 grados
-	}
+void apertura(int estado)
+{    
+   val = 120;
+   serv.write(val);
+   delay(1000);
 }
 
-void prensadobajada(int dato)
+void cierre(int estado)
 {
-        while (Serial.available()) //Mientras el puerto serie este accesible
-        {
-            byte dato = Serial.read();  //Guardamos en dato el valor leído del puerto serie
-            if (dato==1)
-	    {  
-               digitalWrite(mot,HIGH); //Si es '1' ponemos el motor en marcha
-            }
-             
-         }
- }
-void cierre(int an){
-	for (an = 45; an < 0; an--) {
-		serv.write(an);//se cierra lentamente a 0 grados
-	}
+  val = 0;
+  serv.write(val);
 }
 
-void prensadosubida(int dato)
+void apagarLEDs()
 {
-	while(Serial.available())
-	{
-		byte dato=Serial.read();
-		if(dato==1)
-		{
-			digitalWrite(mot,LOW); //Se necesita otro pin?
-		}
-	}
+  // Apagamos todos los LEDs
+  digitalWrite(Azul, LOW);
+  digitalWrite(Amarillo, LOW);
+  digitalWrite(Rojo, LOW);
+}
+
+void llenadoyprensado(float distancia, int val2)
+{
+  if (distancia < umbral1 && distancia >= umbral2)
+  {
+    val2 = 180;
+    digitalWrite(Azul, HIGH);
+    serv.attach(26);
+    myserv.write(val2);
+  }
+  else if (distancia < umbral2 && distancia > umbral3)
+  {
+    val2 = 180;
+    digitalWrite(Amarillo, HIGH);
+    serv.attach(26);
+    myserv.write(val2);
+  }
+  else if (distancia <= umbral3)
+  {
+    val2 = 0;
+    digitalWrite(Rojo, HIGH);
+    serv.detach();
+    myserv.attach(31);
+    myserv.write(val2);
+    delay(50);
+  }
+}
+
+float calcularDist()
+{
+  unsigned long tiempo = pulseIn(Echo, HIGH);
+ 
+  float distancia = tiempo * 0.000001 * sonido / 2.0;
+  Serial.print(distancia);
+  Serial.print("cm");
+  Serial.println();
+  delay(500);
+ 
+  return distancia;
+}
+
+void iniciarTrigger()
+{
+  digitalWrite(Trigger, LOW);
+  delayMicroseconds(2);
+ 
+  digitalWrite(Trigger, HIGH);
+  delayMicroseconds(10);
+ 
+  digitalWrite(Trigger, LOW);
 }
