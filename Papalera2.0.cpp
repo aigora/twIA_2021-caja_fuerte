@@ -26,13 +26,12 @@ void arduino(void);
 void Talk_with_Arduino(Serial* Arduino);
 void Send_to_hw(Serial*, char*);
 int Receive_from_hw(Serial* Arduino, char* BufferEntrada);
-int Send_and_Receive(Serial* Arduino, const char* msg_out, int valor_out, char* msg_in, int* valor_in);
-void monitorizar_aforo(Serial*);*/
+int Send_and_Receive(Serial* Arduino, const char* msg_out, int valor_out, char* msg_in, int* valor_in);*/
 int main() {
 	int op, cant, i, j = 0;
 	char nom[N]; 
 	PAP* pa, * paux;
-	printf("¿Cuantos contenedores posee su sistema?\n");
+	printf("Â¿Cuantos contenedores posee su sistema?\n");
 	scanf_s("%d", &cant);
 	pa = (PAP*)malloc(cant * sizeof(PAP));
 	inicializar(pa, cant);
@@ -41,7 +40,7 @@ int main() {
 	do {
 		j = 0;
 		printf("\t\t\tBIENVENIDO\n");
-		printf("\t\t\t¿Que desea hacer?\n\t\t\t\t1. Dar de alta un nuevo contenedor\n\t\t\t\t2. Dar de baja un contenedor\n\t\t\t\t3. Modificar\n\t\t\t\t4. Consultar datos de un contenedor\n\t\t\t\t5. Consultar estado de un contenedor\n\t\t\t\t6. Salir\n");
+		printf("\t\t\tÂ¿Que desea hacer?\n\t\t\t\t1. Dar de alta un nuevo contenedor\n\t\t\t\t2. Dar de baja un contenedor\n\t\t\t\t3. Modificar\n\t\t\t\t4. Consultar datos de un contenedor\n\t\t\t\t5. Consultar estado de un contenedor\n\t\t\t\t6. Salir\n");
 		scanf_s("%d", &op);
 		if (op > 6 || op <= 0) {
 			printf("Operacion inexistente.\n");
@@ -62,7 +61,7 @@ int main() {
 				}
 				else {
 					printf("ELIMINAR CONTENEDOR\n");
-					printf("¿Cual es el codigo de el que desea dar de baja:\n");
+					printf("Â¿Cual es el codigo de el que desea dar de baja:\n");
 					getchar();
 					gets_s(nom);
 					for (i = 0; i < cant; i++) {
@@ -112,7 +111,7 @@ int main() {
 					printf("No hay contenedores disponbles.\n");
 				}
 				else {
-					printf("¿Cual es el codigo del contenedor del cual quiere ver sus datos?:\n");
+					printf("Â¿Cual es el codigo del contenedor del cual quiere ver sus datos?:\n");
 					getchar();
 					gets_s(nom);
 					for (i = 0; i < cant; i++) {
@@ -157,7 +156,7 @@ void inicializar(PAP *v, int can) {
 		gets_s((v + i)->localidad);
 		printf("Introduzca la calle o avenida donde se encuentra:\n");
 		gets_s((v + i)->calle);
-		printf("Introduzca el numero de portal (o el más cercano):\n");
+		printf("Introduzca el numero de portal (o el mÃ¡s cercano):\n");
 		scanf_s("%d", &(v + i)->num);
 		printf("Introduzca el codigo postal de donde se encuentra:\n");
 		scanf_s("%d", &(v + i)->postal);
@@ -221,7 +220,7 @@ void modificar(PAP* m, int c,char* cod) {
 	int i, j, o = 0;
 	for (i = 0; i < c; i++) {
 		if (strcmp(cod, (m + i)->codigo) == 0) {
-			printf("¿Que dato desea modificar?\n1.Codigo\n2.Localidad\n3.Calle o avenida\n4.Numero de portal\n5.Codigo postal\n3.Coordenadas GPS\n");
+			printf("Â¿Que dato desea modificar?\n1.Codigo\n2.Localidad\n3.Calle o avenida\n4.Numero de portal\n5.Codigo postal\n3.Coordenadas GPS\n");
 			scanf_s("%d", &o);
 			if (o == 1) {
 				printf("Introduzca el nuevo codigo:\n");
@@ -278,10 +277,10 @@ void lista(PAP *l, int ca) {
 	errno_t err1;
 	err1 = fopen_s(&list, "Listado.txt", "w+");
 	if (err1 == 0) {
-		printf("El archivo Listado.txt está abierto\n");
+		printf("El archivo Listado.txt estÃ¡ abierto\n");
 	}
 	else {
-		printf("El archivo Listado.txt NO está abierto\n");
+		printf("El archivo Listado.txt NO estÃ¡ abierto\n");
 	}
 	for (i = 0; i < ca; i++) {
 		fprintf(list, "Datos contenedor %d\n\tCodigo: %s\n\tDireccion postal: %s, n%d\n\t\t\t %d %s\n\tCoordenadas GPS: %d grados %d minutos %d segundos\n", i+1, (l + i)->codigo, (l + i)->calle, (l + i)->num, (l + i)->postal, (l + i)->localidad, (l + i)->GPS[0], (l + i)->GPS[1], (l + i)->GPS[2]);
@@ -295,9 +294,9 @@ void lista(PAP *l, int ca) {
 }
 /*void arduino(void) {
 	Serial* Arduino;
-	char puerto[] = "COM3"; //Puerto serie al que está conectado Arduino
+	char puerto[] = "COM3"; //Puerto serie al que estÃ¡ conectado Arduino
 	configura();
-	Arduino = new Serial((char*)puerto);  // Establece la conexión con Arduino
+	Arduino = new Serial((char*)puerto);  // Establece la conexiÃ³n con Arduino
 	Talk_with_Arduino(Serial * Arduino);
 }
 void configura(void)
@@ -310,20 +309,20 @@ void Talk_with_Arduino(Serial* Arduino)
 	char BufferEntrada[MAX_BUFFER];
 	int bytesReceive, numero_recibido;
 
-	if (Arduino->IsConnected()) // Si hay conexión con Arduino 
+	if (Arduino->IsConnected()) // Si hay conexiÃ³n con Arduino 
 	{
 
-		// Para enviar un mensaje y obtener una respuesta se utiliza la función Send_and_Receive
-		// El mensaje está formado por un texto y un entero
-		// El mensaje que se recibe está formado también por un texto y un entero.
-		// Parámetros de la función:
+		// Para enviar un mensaje y obtener una respuesta se utiliza la funciÃ³n Send_and_Receive
+		// El mensaje estÃ¡ formado por un texto y un entero
+		// El mensaje que se recibe estÃ¡ formado tambiÃ©n por un texto y un entero.
+		// ParÃ¡metros de la funciÃ³n:
 		// El primero es la referencia a Arduino
 		// El segundo es el mensaje que se desea enviar
 		// El tercero es un entero que complementa al mensaje que se desea enviar
 		// El cuarto es el vector de char donde se recibe la respuesta
 		// El quinto es la referencia donde se recibe el entero de la respuesta
 		// IMPORTANTE: El mensaje de respuesta que emite Arduino  debe incluir un espacio en blanco separando respuesta de valor
-		// La función devuelve un entero con los bytes recibidos. Si es cero no se ha recibido nada.
+		// La funciÃ³n devuelve un entero con los bytes recibidos. Si es cero no se ha recibido nada.
 
 		bytesReceive = Send_and_Receive(Arduino, "GET_ESTADO", -1, BufferEntrada, &numero_recibido);
 		if (bytesReceive == 0)
@@ -332,7 +331,7 @@ void Talk_with_Arduino(Serial* Arduino)
 			printf("Mensaje recibido %s %d\n", BufferEntrada, numero_recibido);
 	}
 	else
-		printf("La comunicación con la plataforma hardware no es posible en este momento\n"); // Req 3
+		printf("La comunicaciÃ³n con la plataforma hardware no es posible en este momento\n"); // Req 3
 }
 int Send_and_Receive(Serial* Arduino, const char* msg_out, int valor_out, char* msg_in, int* valor_in)
 {
@@ -358,7 +357,7 @@ int Send_and_Receive(Serial* Arduino, const char* msg_out, int valor_out, char* 
 	}
 	return bytesReceive;
 }
-// Envía un mensaje a la plataforma hardware
+// EnvÃ­a un mensaje a la plataforma hardware
 void Send_to_hw(Serial* Arduino, char* BufferSalida)
 {
 	Arduino->WriteData(BufferSalida, strlen(BufferSalida));
